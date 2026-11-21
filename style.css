@@ -1,0 +1,28 @@
+/* فونت و اسکرول نرم */
+body {
+    font-family: 'Vazirmatn', sans-serif;
+    scroll-behavior: smooth;
+}
+
+/* افکت زوم روی عکس لباس‌ها */
+.product-card:hover .product-img {
+    transform: scale(1.06);
+}
+
+/* اسکرول‌بار شیک و مینیمال */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #C8A253;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0D0D10;
+}

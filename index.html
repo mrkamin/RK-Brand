@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RK Couture | لباس‌های محفلی زنانه — طراحی هوش مصنوعی و تولید افغانستان</title>
+    
+    <link id="siteFavicon" rel="icon" type="image/svg+xml" href="rk-logo.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Vazirmatn:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                        luxury: ['Cinzel', 'serif'],
+                    },
+                    colors: {
+                        rk: {
+                            black: '#0D0D10',
+                            charcoal: '#17171D',
+                            gold: '#C8A253',
+                            goldLight: '#E5C985',
+                            ivory: '#FAF8F5'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-rk-ivory text-rk-black">
+
+    <!-- ==================== ۱. نمای فروشگاه (مخصوص مشتریان) ==================== -->
+    <div id="storefrontView">
+
+        <!-- نوار اعلان بالا -->
+        <div id="topBannerText" class="bg-rk-black text-gray-200 text-xs sm:text-sm py-2.5 px-4 text-center border-b border-rk-gold/20"></div>
+
+        <!-- هدر -->
+        <header class="sticky top-0 z-40 bg-rk-black/95 backdrop-blur-md text-white border-b border-white/10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-20">
+                    
+                    <!-- لوگو و نام برند (قابل تغییر از پورتل) -->
+                    <a href="#" class="flex items-center gap-3">
+                        <img id="siteLogoImg" src="rk-logo.svg" alt="Logo" class="w-11 h-11 rounded-xl object-contain bg-rk-charcoal">
+                        <div class="leading-tight">
+                            <span id="siteBrandName" class="font-luxury text-2xl font-bold tracking-widest text-white block">RK</span>
+                            <span id="siteBrandSub" class="text-[10px] text-rk-gold tracking-widest uppercase block">AI COUTURE</span>
+                        </div>
+                    </a>
+
+                    <!-- منو -->
+                    <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-300">
+                        <a href="#products" class="text-white font-bold">کلکسیون لباس‌ها</a>
+                        <a href="#how-to-order" class="hover:text-rk-gold transition">نحوه سفارش و ارسال</a>
+                        <a href="#contact-section" class="hover:text-rk-gold transition">تماس با ما</a>
+                    </nav>
+
+                    <!-- انتخاب ارز و لیست پسندیده‌ها -->
+                    <div class="flex items-center gap-2.5">
+                        <select id="currencySelect" onchange="changeCurrency()" class="bg-rk-charcoal border border-white/15 text-xs text-rk-gold font-bold rounded-xl px-2.5 py-2 focus:outline-none focus:border-rk-gold cursor-pointer">
+                            <option value="USD">USD ($)</option>
+                            <option value="AFN">افغانی</option>
+                            <option value="EUR">EUR (€)</option>
+                        </select>
+
+                        <button onclick="toggleBag()" class="relative p-2.5 bg-rk-charcoal border border-white/10 hover:border-rk-gold text-white rounded-xl transition" title="لیست لباس‌های انتخابی">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            </svg>
+                            <span id="bagCount" class="absolute -top-1.5 -right-1.5 bg-rk-gold text-rk-black text-[11px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- بنر اصلی (تمام عکس و متن‌ها قابل تغییر از پورتل) -->
+        <section class="relative bg-rk-black text-white overflow-hidden">
+            <div class="absolute inset-0">
+                <img id="heroBgImg" src="" alt="Banner" onerror="this.style.display='none'" class="w-full h-full object-cover opacity-40">
+                <div class="absolute inset-0 bg-gradient-to-l from-rk-black via-rk-black/80 to-transparent"></div>
+            </div>
+
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+                <div class="max-w-2xl">
+                    <span id="heroBadge" class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-rk-gold/15 border border-rk-gold/40 text-rk-goldLight text-xs font-bold mb-6"></span>
+                    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                        <span id="heroTitleMain"></span>
+                        <span id="heroTitleGold" class="text-rk-gold"></span>
+                    </h1>
+                    <p id="heroDesc" class="text-gray-300 text-base md:text-lg mb-9 leading-relaxed"></p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#products" id="heroBtnPrimary" class="px-8 py-4 bg-rk-gold text-rk-black font-extrabold rounded-xl hover:bg-rk-goldLight transition"></a>
+                        <a href="#contact-section" id="heroBtnSecondary" class="px-7 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition flex items-center gap-2"></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- بخش ۳ مرحله ساده سفارش (قابل تغییر از پورتل) -->
+        <section id="how-to-order" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                    <div class="w-10 h-10 rounded-xl bg-rk-black text-rk-gold font-extrabold flex items-center justify-center mb-3">۱</div>
+                    <h3 id="step1Title" class="font-extrabold text-base mb-1.5"></h3>
+                    <p id="step1Desc" class="text-gray-500 text-sm"></p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white font-extrabold flex items-center justify-center mb-3">۲</div>
+                    <h3 id="step2Title" class="font-extrabold text-base mb-1.5"></h3>
+                    <p id="step2Desc" class="text-gray-500 text-sm"></p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                    <div class="w-10 h-10 rounded-xl bg-rk-gold text-rk-black font-extrabold flex items-center justify-center mb-3">۳</div>
+                    <h3 id="step3Title" class="font-extrabold text-base mb-1.5"></h3>
+                    <p id="step3Desc" class="text-gray-500 text-sm"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- بخش کلکسیون لباس‌ها -->
+        <section id="products" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+                <div>
+                    <span id="productsEyebrow" class="text-rk-gold font-bold text-xs tracking-widest uppercase"></span>
+                    <h2 id="productsTitle" class="text-3xl font-extrabold mt-1"></h2>
+                    <p id="productsSub" class="text-gray-500 text-sm mt-1"></p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2" id="categoryFilters"></div>
+            </div>
+
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+        </section>
+
+        <!-- بخش تماس مستقیم -->
+        <section id="contact-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+            <div class="bg-rk-black text-white rounded-3xl p-8 md:p-12 border border-rk-gold/30">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <span class="text-rk-gold text-xs font-bold tracking-widest">DIRECT ORDER & CONSULTATION</span>
+                        <h2 id="contactTitle" class="text-2xl md:text-4xl font-extrabold mt-2 mb-4"></h2>
+                        <p id="contactDesc" class="text-gray-300 text-sm md:text-base leading-relaxed"></p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <a id="directWhatsappCard" href="#" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 p-6 rounded-2xl transition flex flex-col justify-between gap-4">
+                            <div class="text-3xl">💬</div>
+                            <div>
+                                <p class="text-xs text-emerald-100 font-medium">سفارش و مشاوره در واتساپ</p>
+                                <p id="displayWhatsappNum" class="text-lg font-extrabold mt-1" dir="ltr"></p>
+                            </div>
+                            <span class="text-xs font-bold bg-black/20 py-2 px-3 rounded-lg text-center">شروع گفتگو در واتساپ ←</span>
+                        </a>
+                        <div class="bg-rk-charcoal border border-rk-gold/40 p-6 rounded-2xl flex flex-col justify-between gap-4">
+                            <div class="text-3xl">📞</div>
+                            <div>
+                                <p class="text-xs text-rk-gold font-medium">تماس مستقیم (شماره خطی)</p>
+                                <p id="displayPhoneNum" class="text-lg font-extrabold mt-1" dir="ltr"></p>
+                            </div>
+                            <div class="flex gap-2">
+                                <a id="directPhoneLink" href="#" class="flex-1 text-xs font-bold bg-rk-gold text-rk-black py-2 px-3 rounded-lg text-center hover:bg-rk-goldLight transition">
+                                    تماس بگیرید
+                                </a>
+                                <button onclick="copyDirectPhone()" class="text-xs font-bold bg-white/10 hover:bg-white/20 py-2 px-3 rounded-lg transition">
+                                    کپی
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- فوتر -->
+        <footer class="bg-rk-black text-gray-400 py-10 border-t border-white/10 text-center text-xs">
+            <p id="footerBrand" class="mb-2 text-white font-luxury text-lg tracking-widest"></p>
+            <p id="footerCopyright" class="text-gray-500"></p>
+        </footer>
+
+        <!-- دکمه شناور واتساپ -->
+        <a id="floatingWhatsappBtn" href="#" target="_blank" class="fixed bottom-5 left-5 z-40 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-3 rounded-full shadow-2xl flex items-center gap-2 font-bold text-sm transition hover:scale-105">
+            <span class="text-lg">💬</span>
+            <span class="hidden sm:inline">واتساپ</span>
+        </a>
+    </div>
+
+
+    <!-- ==================== ۲. پورتل مدیریت کامل (Full CMS) ==================== -->
+    <div id="adminPortalView" class="hidden min-h-screen bg-gray-100">
+        <header class="bg-rk-black text-white border-b border-rk-gold/30 sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <img id="adminHeaderLogo" src="rk-logo.svg" class="w-9 h-9 rounded-lg object-contain bg-rk-charcoal">
+                    <span class="text-sm font-bold">پورتل مدیریت کامل ویب‌سایت</span>
+                </div>
+                <button onclick="exitAdminPortal()" class="px-4 py-2 bg-rk-gold text-rk-black text-xs font-extrabold rounded-lg hover:bg-rk-goldLight transition">
+                    خروج و دیدن تغییرات سایت 👁️
+                </button>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- کارت‌های آمار -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border">
+                    <p class="text-xs text-gray-500 font-bold">تعداد لباس‌های فعال</p>
+                    <p id="statProducts" class="text-3xl font-extrabold text-rk-black mt-1">0</p>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border">
+                    <p class="text-xs text-gray-500 font-bold">درخواست‌های واتساپ / تماس</p>
+                    <p id="statInquiries" class="text-3xl font-extrabold text-emerald-600 mt-1">0</p>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border">
+                    <p class="text-xs text-gray-500 font-bold">شماره واتساپ فعال</p>
+                    <p id="statWhatsapp" class="text-base font-extrabold text-rk-gold mt-2" dir="ltr"></p>
+                </div>
+            </div>
+
+            <!-- ۵ تب کامل پورتل -->
+            <div class="flex flex-wrap gap-2 mb-6">
+                <button onclick="switchAdminTab('products')" id="tabBtn-products" class="admin-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-rk-black text-rk-gold">👗 لباس‌ها (افزودن / ویرایش / حذف)</button>
+                <button onclick="switchAdminTab('branding')" id="tabBtn-branding" class="admin-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-white text-gray-600 border">🎨 لوگو و بنر اصلی</button>
+                <button onclick="switchAdminTab('texts')" id="tabBtn-texts" class="admin-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-white text-gray-600 border">📝 ویرایش تمام متن‌ها</button>
+                <button onclick="switchAdminTab('contact')" id="tabBtn-contact" class="admin-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-white text-gray-600 border">📞 شماره‌ها، ارز و رمز پورتل</button>
+                <button onclick="switchAdminTab('inquiries')" id="tabBtn-inquiries" class="admin-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-white text-gray-600 border">💬 گزارش تماس‌ها</button>
+            </div>
+
+            <!-- تب ۱: مدیریت لباس‌ها (افزودن + ویرایش + حذف) -->
+            <div id="adminTab-products" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div id="productFormCard" class="bg-white p-6 rounded-2xl shadow-sm border h-fit">
+                    <div class="flex items-center justify-between mb-4 border-b pb-3">
+                        <h3 id="productFormTitle" class="font-extrabold text-base">➕ افزودن لباس جدید</h3>
+                        <button type="button" id="cancelEditBtn" onclick="cancelEditProduct()" class="hidden text-xs text-red-500 font-bold hover:underline">انصراف از ویرایش</button>
+                    </div>
+                    <form onsubmit="saveProductForm(event)" class="space-y-3.5">
+                        <div>
+                            <label class="block text-xs font-bold mb-1">نام لباس</label>
+                            <input type="text" id="prodName" required placeholder="مثلاً: پیراهن محفلی زمردی" class="w-full border rounded-xl px-3.5 py-2.5 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">دسته‌بندی (انتخاب کنید یا نام جدید بنویسید)</label>
+                            <input type="text" id="prodCategory" list="categoryList" required placeholder="مجلسی و شب" class="w-full border rounded-xl px-3.5 py-2.5 text-sm">
+                            <datalist id="categoryList">
+                                <option value="مجلسی و شب"></option>
+                                <option value="نامزدی و عروسی"></option>
+                                <option value="افغان-مدرن AI"></option>
+                                <option value="لباس روزمره"></option>
+                                <option value="پوشاک مردانه"></option>
+                            </datalist>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold mb-1">قیمت به دالر ($)</label>
+                                <input type="number" id="prodPrice" required min="1" placeholder="150" class="w-full border rounded-xl px-3.5 py-2.5 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold mb-1">کد دیزاین AI</label>
+                                <input type="text" id="prodCode" required placeholder="AI-GOWN #05" class="w-full border rounded-xl px-3.5 py-2.5 text-sm">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">سایزها (با کاما جدا کنید)</label>
+                            <input type="text" id="prodSizes" value="S, M, L, XL, دوخت سفارشی" class="w-full border rounded-xl px-3.5 py-2.5 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">آپلود عکس جدید از کمپیوتر / موبایل</label>
+                            <input type="file" id="prodFile" accept="image/*" onchange="handleProductImgUpload(event)" class="w-full text-xs border rounded-xl p-2 bg-gray-50">
+                            <input type="url" id="prodImgUrl" placeholder="یا لینک مستقیم عکس (https://...)" class="w-full border rounded-xl px-3.5 py-2 text-xs mt-2">
+                            <img id="uploadPreview" class="hidden mt-3 w-24 h-28 object-cover rounded-lg border">
+                        </div>
+                        <button type="submit" id="productSubmitBtn" class="w-full py-3 bg-rk-black text-rk-gold font-extrabold rounded-xl hover:bg-rk-gold hover:text-rk-black transition">
+                            انتشار در ویب‌سایت ✨
+                        </button>
+                    </form>
+                </div>
+
+                <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border">
+                    <div class="flex justify-between items-center mb-4 border-b pb-3">
+                        <h3 class="font-extrabold text-base">لیست لباس‌های سایت (برای تغییر قیمت، نام یا عکس روی «ویرایش» بزنید)</h3>
+                    </div>
+                    <div id="adminProductList" class="space-y-3"></div>
+                </div>
+            </div>
+
+            <!-- تب ۲: تغییر لوگو و بنر اصلی -->
+            <div id="adminTab-branding" class="hidden bg-white p-6 rounded-2xl shadow-sm border max-w-3xl">
+                <h3 class="font-extrabold text-lg mb-5 border-b pb-3">🎨 تغییر لوگو، نام برند و بنر صفحه اصلی</h3>
+                <form onsubmit="saveBrandingSettings(event)" class="space-y-5">
+                    
+                    <!-- بخش تغییر لوگو -->
+                    <div class="p-4 bg-gray-50 rounded-2xl border space-y-3">
+                        <label class="block text-sm font-extrabold">۱. لوگوی برند</label>
+                        <div class="flex flex-wrap items-center gap-4">
+                            <img id="logoPreview" src="rk-logo.svg" class="w-16 h-16 rounded-xl object-contain bg-rk-black p-1 border">
+                            <div class="flex-1 space-y-2">
+                                <input type="file" id="logoFileInput" accept="image/*" onchange="handleLogoUpload(event)" class="text-xs border rounded-xl p-2 bg-white w-full">
+                                <button type="button" onclick="resetLogoToDefault()" class="text-xs text-gray-500 hover:text-rk-black underline">بازگردانی به لوگوی پیش‌فرض RK</button>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                            <div>
+                                <label class="block text-xs font-bold mb-1">نام برند در هدر</label>
+                                <input type="text" id="cmsBrandName" class="w-full border rounded-xl px-3.5 py-2 text-sm bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold mb-1">زیرنویس برند در هدر</label>
+                                <input type="text" id="cmsBrandSub" class="w-full border rounded-xl px-3.5 py-2 text-sm bg-white">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- بخش نوار بالایی -->
+                    <div>
+                        <label class="block text-xs font-bold mb-1">متن نوار اعلان بالای سایت</label>
+                        <input type="text" id="cmsTopBanner" class="w-full border rounded-xl px-4 py-2.5 text-sm">
+                    </div>
+
+                    <!-- بخش بنر اصلی (Hero) -->
+                    <div class="p-4 bg-gray-50 rounded-2xl border space-y-3">
+                        <label class="block text-sm font-extrabold">۲. عکس و متن‌های بنر اصلی (Hero)</label>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">آپلود عکس پس‌زمینه بنر (یا وارد کردن لینک)</label>
+                            <input type="file" id="heroBgFile" accept="image/*" onchange="handleHeroBgUpload(event)" class="text-xs border rounded-xl p-2 bg-white w-full">
+                            <input type="url" id="cmsHeroBgUrl" placeholder="لینک عکس پس‌زمینه..." class="w-full border rounded-xl px-3.5 py-2 text-xs mt-2 bg-white">
+                            <img id="heroBgPreview" class="mt-2 h-24 w-44 object-cover rounded-lg border">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">برچسب کوچک بالای تیتر</label>
+                            <input type="text" id="cmsHeroBadge" class="w-full border rounded-xl px-3.5 py-2 text-sm bg-white">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold mb-1">قسمت اول تیتر اصلی (سفید)</label>
+                                <input type="text" id="cmsHeroTitleMain" class="w-full border rounded-xl px-3.5 py-2 text-sm bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold mb-1">قسمت دوم تیتر اصلی (طلایی)</label>
+                                <input type="text" id="cmsHeroTitleGold" class="w-full border rounded-xl px-3.5 py-2 text-sm bg-white">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">توضیحات زیر تیتر اصلی</label>
+                            <textarea id="cmsHeroDesc" rows="3" class="w-full border rounded-xl px-3.5 py-2 text-sm bg-white"></textarea>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold mb-1">متن دکمه طلایی</label>
+                                <input type="text" id="cmsHeroBtn1" class="w-full border rounded-xl px-3.5 py-2 text-sm bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold mb-1">متن دکمه سبز واتساپ</label>
+                                <input type="text" id="cmsHeroBtn2" class="w-full border rounded-xl px-3.5 py-2 text-sm bg-white">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="px-8 py-3 bg-rk-black text-rk-gold font-extrabold rounded-xl hover:bg-rk-gold hover:text-rk-black transition">
+                        ذخیره لوگو و بنر ✓
+                    </button>
+                </form>
+            </div>
+
+            <!-- تب ۳: ویرایش تمام متن‌های صفحه -->
+            <div id="adminTab-texts" class="hidden bg-white p-6 rounded-2xl shadow-sm border max-w-3xl">
+                <h3 class="font-extrabold text-lg mb-5 border-b pb-3">📝 ویرایش تمام متن‌های بخش‌های مختلف صفحه</h3>
+                <form onsubmit="savePageTexts(event)" class="space-y-5">
+                    
+                    <!-- ۳ کارت مراحل سفارش -->
+                    <div class="p-4 bg-gray-50 rounded-2xl border space-y-3">
+                        <h4 class="font-extrabold text-sm">کارت‌های ۳ مرحله سفارش</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <input type="text" id="cmsStep1Title" placeholder="عنوان کارت ۱" class="border rounded-xl px-3 py-2 text-sm bg-white">
+                            <input type="text" id="cmsStep1Desc" placeholder="توضیح کارت ۱" class="border rounded-xl px-3 py-2 text-sm bg-white">
+                            <input type="text" id="cmsStep2Title" placeholder="عنوان کارت ۲" class="border rounded-xl px-3 py-2 text-sm bg-white">
+                            <input type="text" id="cmsStep2Desc" placeholder="توضیح کارت ۲" class="border rounded-xl px-3 py-2 text-sm bg-white">
+                            <input type="text" id="cmsStep3Title" placeholder="عنوان کارت ۳" class="border rounded-xl px-3 py-2 text-sm bg-white">
+                            <input type="text" id="cmsStep3Desc" placeholder="توضیح کارت ۳" class="border rounded-xl px-3 py-2 text-sm bg-white">
+                        </div>
+                    </div>
+
+                    <!-- متن‌های بخش محصولات -->
+                    <div class="p-4 bg-gray-50 rounded-2xl border space-y-3">
+                        <h4 class="font-extrabold text-sm">عناوین بخش کلکسیون لباس‌ها</h4>
+                        <input type="text" id="cmsProdEyebrow" placeholder="متن انگلیسی کوچک بالای عنوان" class="w-full border rounded-xl px-3 py-2 text-sm bg-white" dir="ltr">
+                        <input type="text" id="cmsProdTitle" placeholder="عنوان اصلی بخش محصولات" class="w-full border rounded-xl px-3 py-2 text-sm bg-white">
+                        <input type="text" id="cmsProdSub" placeholder="زیرعنوان بخش محصولات" class="w-full border rounded-xl px-3 py-2 text-sm bg-white">
+                    </div>
+
+                    <!-- متن‌های بخش تماس و فوتر -->
+                    <div class="p-4 bg-gray-50 rounded-2xl border space-y-3">
+                        <h4 class="font-extrabold text-sm">متن بخش تماس با ما و فوتر</h4>
+                        <input type="text" id="cmsContactTitle" placeholder="تیتر بخش تماس" class="w-full border rounded-xl px-3 py-2 text-sm bg-white">
+                        <textarea id="cmsContactDesc" rows="2" placeholder="توضیحات بخش تماس" class="w-full border rounded-xl px-3 py-2 text-sm bg-white"></textarea>
+                        <input type="text" id="cmsFooterBrand" placeholder="عنوان فوتر" class="w-full border rounded-xl px-3 py-2 text-sm bg-white">
+                        <input type="text" id="cmsFooterCopy" placeholder="متن کپی‌رایت فوتر" class="w-full border rounded-xl px-3 py-2 text-sm bg-white">
+                    </div>
+
+                    <button type="submit" class="px-8 py-3 bg-rk-black text-rk-gold font-extrabold rounded-xl hover:bg-rk-gold hover:text-rk-black transition">
+                        ذخیره تمام متن‌ها ✓
+                    </button>
+                </form>
+            </div>
+
+            <!-- تب ۴: شماره‌ها، ارز، رمز پورتل و بکاپ -->
+            <div id="adminTab-contact" class="hidden bg-white p-6 rounded-2xl shadow-sm border max-w-3xl space-y-8">
+                <form onsubmit="saveContactAndSecurity(event)" class="space-y-5">
+                    <h3 class="font-extrabold text-lg border-b pb-3">📞 شماره‌های تماس، نرخ ارز و رمز عبور</h3>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold mb-1">شماره واتساپ (با کد کشور، مثلاً +93700...)</label>
+                            <input type="text" id="settingWhatsapp" required class="w-full border rounded-xl px-4 py-2.5 text-sm" dir="ltr">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">شماره خطی / تماس مستقیم</label>
+                            <input type="text" id="settingPhone" required class="w-full border rounded-xl px-4 py-2.5 text-sm" dir="ltr">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold mb-1">نرخ هر ۱ دالر به افغانی</label>
+                            <input type="number" id="settingAfnRate" step="0.5" class="w-full border rounded-xl px-4 py-2.5 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">نرخ هر ۱ دالر به یورو</label>
+                            <input type="number" id="settingEurRate" step="0.01" class="w-full border rounded-xl px-4 py-2.5 text-sm">
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-amber-50 border border-amber-200 rounded-2xl space-y-2">
+                        <label class="block text-xs font-extrabold text-amber-900">🔐 تغییر رمز عبور پورتل (اختیاری - اگر نمی‌خواهید تغییر دهید خالی بگذارید)</label>
+                        <input type="password" id="settingNewPassword" placeholder="رمز عبور جدید..." class="w-full border rounded-xl px-4 py-2.5 text-sm bg-white">
+                    </div>
+
+                    <button type="submit" class="px-8 py-3 bg-rk-black text-rk-gold font-extrabold rounded-xl hover:bg-rk-gold hover:text-rk-black transition">
+                        ذخیره تنظیمات ✓
+                    </button>
+                </form>
+
+                <!-- بکاپ و بازیابی -->
+                <div class="border-t pt-6">
+                    <h4 class="font-extrabold text-sm mb-3">💾 پشتیبان‌گیری (Backup) از کل تغییرات و محصولات</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="exportBackup()" class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-xs font-bold rounded-xl">⬇️ دانلود فایل بکاپ</button>
+                        <label class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-xs font-bold rounded-xl cursor-pointer">
+                            ⬆️ بارگذاری فایل بکاپ
+                            <input type="file" accept=".json" onchange="importBackup(event)" class="hidden">
+                        </label>
+                        <button onclick="resetAllData()" class="px-4 py-2.5 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white text-xs font-bold rounded-xl transition">بازگردانی کل سایت به پیش‌فرض</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تب ۵: گزارش تماس‌ها -->
+            <div id="adminTab-inquiries" class="hidden bg-white p-6 rounded-2xl shadow-sm border">
+                <div class="flex justify-between items-center mb-4 border-b pb-3">
+                    <h3 class="font-extrabold text-lg">💬 گزارش لباس‌هایی که مشتریان برای آن‌ها تماس گرفته‌اند</h3>
+                    <button onclick="clearInquiries()" class="text-xs text-red-500 hover:underline">پاک کردن لیست گزارش</button>
+                </div>
+                <div id="adminInquiriesList" class="space-y-3"></div>
+            </div>
+        </main>
+    </div>
+
+
+    <!-- ==================== ۳. پنجره‌های سفارش و ورود مخفی ==================== -->
+    
+    <!-- پنجره سفارش یک لباس -->
+    <div id="orderModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl relative">
+            <button onclick="closeOrderModal()" class="absolute top-4 left-4 z-10 w-8 h-8 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black">✕</button>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-5">
+                <div class="sm:col-span-2 bg-gray-100 h-56 sm:h-auto">
+                    <img id="modalProdImg" src="" class="w-full h-full object-cover" alt="">
+                </div>
+                <div class="sm:col-span-3 p-6 flex flex-col justify-between">
+                    <div>
+                        <span id="modalProdCode" class="text-[11px] font-bold text-rk-gold bg-rk-black px-2.5 py-0.5 rounded-full"></span>
+                        <h3 id="modalProdName" class="text-lg font-extrabold mt-2"></h3>
+                        <p id="modalProdPrice" class="text-xl font-extrabold text-rk-black mt-1" dir="ltr"></p>
+
+                        <div class="mt-4">
+                            <p class="text-xs font-bold text-gray-500 mb-2">سایز مورد نظر خود را انتخاب کنید:</p>
+                            <div id="modalSizes" class="flex flex-wrap gap-1.5"></div>
+                        </div>
+
+                        <p class="text-[11px] text-gray-500 mt-4 leading-relaxed bg-rk-ivory p-2.5 rounded-xl border border-rk-gold/20">
+                            پس از تماس در واتساپ یا شماره خطی، درباره سایز دقیق، روش انتقال پول و ارسال به کشور شما هماهنگ می‌کنیم.
+                        </p>
+                    </div>
+
+                    <div class="space-y-2.5 mt-5">
+                        <button onclick="contactViaWhatsApp()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-sm rounded-xl transition flex items-center justify-center gap-2 shadow-md">
+                            <span>💬</span> سفارش همین لباس در واتساپ
+                        </button>
+                        <div class="flex gap-2">
+                            <a id="modalCallBtn" onclick="logPhoneInquiry()" href="#" class="flex-1 py-2.5 bg-rk-black hover:bg-rk-gold hover:text-rk-black text-rk-gold font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-1.5">
+                                <span>📞</span> تماس خطی (<span id="modalPhoneText" dir="ltr"></span>)
+                            </a>
+                            <button onclick="copyDirectPhone()" class="px-3 py-2.5 bg-gray-100 hover:bg-gray-200 text-xs font-bold rounded-xl">کپی</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- لیست کشویی لباس‌های پسندیده شده -->
+    <div id="bagOverlay" onclick="toggleBag()" class="fixed inset-0 bg-black/60 z-50 hidden"></div>
+    <aside id="bagDrawer" class="fixed top-0 left-0 h-full w-full max-w-md bg-white z-50 shadow-2xl transform -translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-6 border-b flex items-center justify-between bg-rk-black text-white">
+            <h2 class="text-lg font-bold">لباس‌های پسندیده شده ❤️</h2>
+            <button onclick="toggleBag()" class="text-gray-300 text-xl">✕</button>
+        </div>
+        <div id="bagItems" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+        <div class="p-6 border-t bg-gray-50 space-y-3">
+            <div class="flex justify-between items-center">
+                <span class="text-gray-600 text-sm font-medium">مجموع تقریبی:</span>
+                <span id="bagTotal" class="text-lg font-extrabold text-rk-black" dir="ltr">$0</span>
+            </div>
+            <button onclick="sendBagToWhatsApp()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-sm rounded-xl transition flex items-center justify-center gap-2">
+                <span>💬</span> ارسال این لیست به واتساپ
+            </button>
+            <a id="bagCallBtn" href="#" class="block w-full py-3 bg-rk-black text-rk-gold text-center font-bold text-xs rounded-xl hover:bg-rk-gold hover:text-rk-black transition">
+                📞 تماس مستقیم با شماره خطی
+            </a>
+        </div>
+    </aside>
+
+    <!-- پنجره ورود اختصاصی -->
+    <div id="adminLoginModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-7 shadow-2xl text-center relative">
+            <button onclick="closeAdminLogin()" class="absolute top-4 left-4 text-gray-400 hover:text-rk-black">✕</button>
+            <div class="w-12 h-12 mx-auto bg-rk-black text-rk-gold rounded-2xl flex items-center justify-center text-xl mb-3">🔐</div>
+            <h3 class="text-lg font-extrabold mb-1">پورتل اختصاصی مدیریت</h3>
+            <p class="text-xs text-gray-500 mb-5">رمز عبور مدیریت را وارد کنید</p>
+            <form onsubmit="verifyAdminLogin(event)" class="space-y-3">
+                <input type="password" id="adminPassInput" required placeholder="رمز عبور..." class="w-full border rounded-xl px-4 py-3 text-center text-sm focus:outline-none focus:border-rk-gold">
+                <button type="submit" class="w-full py-3 bg-rk-black text-rk-gold font-extrabold rounded-xl hover:bg-rk-gold hover:text-rk-black transition">ورود به پورتل</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- اعلان کوچک -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-rk-black text-rk-gold border border-rk-gold/40 px-5 py-3 rounded-xl shadow-xl text-sm font-bold transform translate-y-24 opacity-0 transition-all duration-300 z-50"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
